@@ -1,0 +1,12 @@
+# Locally generated, persistent runtime state
+/disks/
+/runtime/
+.vagrant/
+disks/
+runtime/*.log
+runtime/*.pid
+runtime/*.tmp
+.DS_Store
+*.pem
+*.key
+!config/agent-identity/rootCA.pem

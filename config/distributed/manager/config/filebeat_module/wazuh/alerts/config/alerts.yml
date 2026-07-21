@@ -1,0 +1,9 @@
+fields:
+  index_prefix: {{ .index_prefix }}
+type: log
+paths:
+{{ range $i, $path := .paths }}
+ - {{$path}}
+{{ end }}
+file_identity.inode_marker.path: /var/ossec/logs/.filebeat-marker
+module_version: 0.1

@@ -1,0 +1,25 @@
+services:
+  wazuh.indexer:
+    image: wazuh/wazuh-indexer:${WAZUH_VERSION}
+    hostname: wazuh.indexer
+    restart: always
+    ports:
+      - "9200:9200"
+    environment:
+      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - /var/lib/wazuh-indexer/data:/var/lib/wazuh-indexer
+      - ./config/wazuh_indexer_ssl_certs/root-ca.pem:${WAZUH_INDEXER_CERTS_PATH}/root-ca.pem
+      - ./config/wazuh_indexer_ssl_certs/wazuh.indexer-key.pem:${WAZUH_INDEXER_CERTS_PATH}/wazuh.indexer.key
+      - ./config/wazuh_indexer_ssl_certs/wazuh.indexer.pem:${WAZUH_INDEXER_CERTS_PATH}/wazuh.indexer.pem
+      - ./config/wazuh_indexer_ssl_certs/admin.pem:${WAZUH_INDEXER_CERTS_PATH}/admin.pem
+      - ./config/wazuh_indexer_ssl_certs/admin-key.pem:${WAZUH_INDEXER_CERTS_PATH}/admin-key.pem
+      - ./config/wazuh_indexer/wazuh.indexer.yml:${WAZUH_INDEXER_OPENSEARCH_CONFIG_PATH}
+      - ./config/wazuh_indexer/internal_users.yml:${WAZUH_INDEXER_INTERNAL_USERS_PATH}
